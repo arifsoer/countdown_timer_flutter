@@ -32,6 +32,7 @@ class Home extends StatelessWidget {
               child: Text(
                 'to Go back to Surabaya',
                 style: Theme.of(context).textTheme.headline3,
+                textAlign: TextAlign.center,
               ),
             )
           ],
