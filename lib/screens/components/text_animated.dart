@@ -10,9 +10,58 @@ class TextAnimated extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.headline1,
+    final digits = text.split("");
+    return Row(
+      children: [
+        DoAnimation(text: digits[0]),
+        DoAnimation(text: digits[1]),
+      ],
+    );
+  }
+}
+
+class DoAnimation extends StatefulWidget {
+  const DoAnimation({super.key, required this.text});
+
+  final String text;
+
+  @override
+  State<DoAnimation> createState() => _DoAnimationState();
+}
+
+class _DoAnimationState extends State<DoAnimation>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> _animation;
+  late AnimationController _animationController;
+  late ValueNotifier<String> textChanged = ValueNotifier<String>('');
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController);
+    _animation.addListener(() {
+      setState(() {});
+    });
+    textChanged.addListener(() {
+      _animationController.reset();
+      _animationController.forward();
+    });
+    _animationController.forward();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    textChanged.value = widget.text;
+    return Opacity(
+      opacity: _animation.value,
+      child: Text(
+        textChanged.value,
+        style: Theme.of(context).textTheme.headline1,
+      ),
     );
   }
 }
