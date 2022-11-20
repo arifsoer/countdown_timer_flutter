@@ -42,15 +42,26 @@ class _DoAnimationState extends State<DoAnimation>
       duration: const Duration(milliseconds: 300),
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController);
-    _animation.addListener(() {
-      setState(() {});
-    });
-    textChanged.addListener(() {
-      _animationController.reset();
-      _animationController.forward();
-    });
+    _animation.addListener(animationListener);
+    textChanged.addListener(valueChangedListener);
     _animationController.forward();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animation.removeListener(animationListener);
+    textChanged.removeListener(valueChangedListener);
+    super.dispose();
+  }
+
+  void animationListener() {
+    setState(() {});
+  }
+
+  void valueChangedListener() {
+    _animationController.reset();
+    _animationController.forward();
   }
 
   @override
