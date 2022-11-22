@@ -1,6 +1,7 @@
 import 'package:countdown_timer/controllers/counter_controller.dart';
 import 'package:countdown_timer/models/computed_duration.dart';
 import 'package:countdown_timer/responsive_builder.dart';
+import 'package:countdown_timer/screens/components/sample_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +35,7 @@ class Home extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
                 textAlign: TextAlign.center,
               ),
-            )
+            ),
           ],
         ),
       ),
